@@ -33,7 +33,7 @@ MALI_WAYLAND_rk3328 = "libmali-utgard-450-r7p0-wayland.so"
 MALI_GBM_rk3328 = "libmali-utgard-450-r7p0-gbm.so"
 
 MALI_X11_rk3399 = "libmali-midgard-t86x-r14p0.so"
-MALI_WAYLAND_rk3399 = "libmali-midgard-t86x-r14p0-wayland.so"
+MALI_WAYLAND_rk3399 = "libmali-midgard-t86x-r14p0-r0p0-wayland-gbm.so"
 MALI_GBM_rk3399 = "libmali-midgard-t86x-r14p0-gbm.so"
 
 # There's only hardfp version available
