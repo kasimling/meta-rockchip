@@ -207,5 +207,5 @@ generate_aarch64_loader_image () {
 
 	dd if=${DEPLOY_DIR_IMAGE}/${IDBLOADER} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER1_START}
 	dd if=${DEPLOY_DIR_IMAGE}/${UBOOT_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER2_START}
-	dd if=${DEPLOY_DIR_IMAGE}/${TRUST_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${ATF_START}
+	dd if=${DEPLOY_DIR_IMAGE}/rk-binary/trust.img of=${GPTIMG} conv=notrunc,fsync seek=${ATF_START}
 }
