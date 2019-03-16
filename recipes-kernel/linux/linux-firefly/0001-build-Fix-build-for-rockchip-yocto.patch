@@ -1,0 +1,84 @@
+From 2948c89dc2abeee363458fb2d54611a8f2a35879 Mon Sep 17 00:00:00 2001
+From: Alex Ling <kasimling@gmail.com>
+Date: Sun, 17 Mar 2019 08:00:06 +0800
+Subject: [PATCH] build: Fix build for rockchip yocto
+
+Signed-off-by: Alex Ling <kasimling@gmail.com>
+---
+ drivers/char/Makefile    |  4 ++--
+ drivers/mmc/card/block.c | 16 ++++++++--------
+ drivers/spi/Makefile     | 12 ++++++------
+ 3 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/char/Makefile b/drivers/char/Makefile
+index 2c0fc6d42199..4d98df8f66e0 100644
+--- a/drivers/char/Makefile
++++ b/drivers/char/Makefile
+@@ -52,8 +52,8 @@ obj-$(CONFIG_PCMCIA)		+= pcmcia/
+ 
+ obj-$(CONFIG_HANGCHECK_TIMER)	+= hangcheck-timer.o
+ ifeq ($(CONFIG_ARM64),y)
+-obj-y							+= virtdrm.o
+-virtdrm-objs					:= virtd
++#obj-y							+= virtdrm.o
++#virtdrm-objs					:= virtd
+ endif
+ obj-$(CONFIG_TCG_TPM)		+= tpm/
+ 
+diff --git a/drivers/mmc/card/block.c b/drivers/mmc/card/block.c
+index c3e3be0f3bfa..548cdf85366d 100644
+--- a/drivers/mmc/card/block.c
++++ b/drivers/mmc/card/block.c
+@@ -2889,10 +2889,10 @@ static int mmc_blk_probe(struct mmc_card *card)
+ 			goto out;
+ 	}
+ 
+-#ifdef CONFIG_ARM64
+-	if (card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC)
+-		mmc_blk_emmc_add(card, sizeof(struct mmc_blk_data));
+-#endif
++//#ifdef CONFIG_ARM64
++//	if (card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC)
++//		mmc_blk_emmc_add(card, sizeof(struct mmc_blk_data));
++//#endif
+ 
+ 	pm_runtime_set_autosuspend_delay(&card->dev, 3000);
+ 	pm_runtime_use_autosuspend(&card->dev);
+@@ -2951,10 +2951,10 @@ static int _mmc_blk_suspend(struct mmc_card *card)
+ 
+ static void mmc_blk_shutdown(struct mmc_card *card)
+ {
+-#ifdef CONFIG_ARM64
+-	if (card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC)
+-		mmc_blk_emmc_remove(card);
+-#endif
++//#ifdef CONFIG_ARM64
++//	if (card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC)
++//		mmc_blk_emmc_remove(card);
++//#endif
+ 
+ 	_mmc_blk_suspend(card);
+ }
+diff --git a/drivers/spi/Makefile b/drivers/spi/Makefile
+index 2b97db6ddc0d..5cc3aabce645 100644
+--- a/drivers/spi/Makefile
++++ b/drivers/spi/Makefile
+@@ -93,9 +93,9 @@ obj-$(CONFIG_SPI_XILINX)		+= spi-xilinx.o
+ obj-$(CONFIG_SPI_XLP)			+= spi-xlp.o
+ obj-$(CONFIG_SPI_XTENSA_XTFPGA)		+= spi-xtensa-xtfpga.o
+ obj-$(CONFIG_SPI_ZYNQMP_GQSPI)		+= spi-zynqmp-gqspi.o
+-obj-$(CONFIG_SPI_WK2XXX)            += spi-wk2xxx.o
+-ifeq ($(CONFIG_ARM64),y)
+-spi-wk2xxx-objs                        := spi-wk2xxx_64bit
+-else
+-spi-wk2xxx-objs                        := spi-wk2xxx_32bit
+-endif
++#obj-$(CONFIG_SPI_WK2XXX)            += spi-wk2xxx.o
++#ifeq ($(CONFIG_ARM64),y)
++#spi-wk2xxx-objs                        := spi-wk2xxx_64bit.o
++#else
++#spi-wk2xxx-objs                        := spi-wk2xxx_32bit.o
++#endif
+-- 
+2.17.1
+
